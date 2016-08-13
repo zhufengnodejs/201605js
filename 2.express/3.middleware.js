@@ -17,8 +17,17 @@ var app= express();
 //如果不传路径，表示对所有的路径执行此中间件函数
 app.use(function(req,res,next){
     res.setHeader('Content-Type','text/plain;charset=utf-8');
-    //我希望统计本次请求的处理时间
-
+    //我希望统计本次请求的处理时间,在控制台输出
+    res.startDate = Date.now();
+    //先把原来的end函数暂存一下
+    //console.log(res.hasOwnProperty('end'));
+    var end = res.end;
+    //因为end是在res原型上的方法，所以这是给res增加私有属性，从而覆盖了原型上的方法
+    res.end = function(msg){
+        //把res作为this指针调用end函数，并传递msg传递
+        end.call(res,msg);
+        console.log(Date.now() - res.startDate);
+    }
     next();
 });
 //使用中间件  请求 响应 next函数
@@ -26,8 +35,8 @@ app.use(function(req,res,next){
 app.use('/money',function(req,res,next){
     req.money = 10000;
     console.log('部门经理',req.money);
-    //res.end('昨天晚上明明是8点59走的，不报销');
-    next();
+    res.end('昨天晚上明明是8点59走的，不报销');
+    //next();
 });
 //总监
 app.use('/money',function(req,res,next){
