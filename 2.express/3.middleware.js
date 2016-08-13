@@ -8,18 +8,26 @@ var app= express();
  * 2. 上一个中间件的处理结果可以传递给下一个中间件或路由
  * 3. 中间件可以通过是否调用next函数来决定是否将此请求继续向下传递
  * 4. 路由和中间件是放在一个数组中的
- * 5.
+ *
+ * 中间件的用途
+ * 1. 公用的处理，或添加公共的方法
  *
  *
  */
+//如果不传路径，表示对所有的路径执行此中间件函数
+app.use(function(req,res,next){
+    res.setHeader('Content-Type','text/plain;charset=utf-8');
+    //我希望统计本次请求的处理时间
+
+    next();
+});
 //使用中间件  请求 响应 next函数
 //部门经理
 app.use('/money',function(req,res,next){
     req.money = 10000;
     console.log('部门经理',req.money);
-    //next();
-
-    res.end('昨天晚上明明是8点59走的，不报销');
+    //res.end('昨天晚上明明是8点59走的，不报销');
+    next();
 });
 //总监
 app.use('/money',function(req,res,next){
@@ -37,7 +45,11 @@ app.use('/money',function(req,res,next){
 //到自己手里了
 app.get('/money',function(req,res){
     console.log('自己',req.money);
-    res.end(''+req.money);
+    res.end('自己'+req.money);
+});
+//买
+app.get('/buy',function(req,res){
+    res.end('买'+req.money);
 });
 
 app.listen(9090);
