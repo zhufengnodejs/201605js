@@ -13,7 +13,7 @@ module.exports = function(){
      var pathname = urlObj.pathname;
      var index = 0;
        //定义在中间件里之后，后面所有的路由里都可以使用res.render方法
-     res.render = function(tmpl,data){
+     res.render1 = function(tmpl,data,callback){
            var viewEngine = app.getKey('view engine');//获得模板引擎
            if(viewEngine == 'ejs'){//如果是ejs
                //如果原来的模板路径有后缀.ejs,则追加一个空串，否则，加.ejs后缀
@@ -27,7 +27,14 @@ module.exports = function(){
                        var attr = arguments[1];//第一个分组,其实就是变量名
                        return data[attr];//返回数据对象属性对应的值
                    });
-                   res.end(content);
+                   //如果传入了回调函数，那么把结果传递给回调函数
+                   if(callback){
+                       callback(null,content);
+                   }else{
+                       //直接响应给客户端
+                       res.end(content);
+                   }
+
                });
            }else{
                res.end('不支持的模板引擎')
