@@ -33,6 +33,7 @@ app.use(function(req,res,next){
         end.call(res,msg);
         console.log(Date.now() - res.startDate);
     }
+    console.log('first /');
     next();
 });
 //使用中间件  请求 响应 next函数
@@ -66,6 +67,11 @@ app.get('/money',function(req,res){
 //买
 app.get('/buy',function(req,res){
     res.end('买'+req.money);
+});
+
+app.use('/home',function(req,res,next){
+    console.log('home');
+    res.end('home');
 });
 
 app.listen(9090);

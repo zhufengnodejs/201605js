@@ -21,27 +21,19 @@ module.exports = function(){
             //如果请求的路径名是以当前path开头的话，则匹配
             if(pathname.indexOf(layer.path) ==0){
                 layer.listener(req,res,next);//中间有三个参数
+            }else{
+                next();
             }
         }else{//如果此层是路由的话
             if((layer.method== 'all' || method == layer.method) && (layer.path == pathname|| layer.path == '*')) {
                 return layer.listener(req, res);//路由有两个参数
+            }else{
+                next();
             }
         }
      }
        //定义完成之后立刻调用此方法开始迭代
      next();
-      /* //循环保存在数组的每个路由配置对象
-     for(var i=0;i<app.layers.length;i++){
-         //取出当前的路由
-        var route = app.layers[i];
-         //如果方法名相同并且路径相当的话，就可以执行对应的回调函数了
-        if((route.method== 'all' || method == route.method) && (route.path == pathname|| route.path == '*')){
-            //执行对应的监听函数
-            route.listener(req,res);
-            //如果已经当前路由对象和当前请求已经成功配对，则不再继续匹配
-            break;
-        }
-     }*/
    }
     //app内部维护了一个监听数组，可以有是一个中间件，也可以是一个路由
    app.layers = [];
