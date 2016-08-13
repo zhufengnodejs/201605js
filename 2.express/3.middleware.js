@@ -1,4 +1,4 @@
-var express = require('./express');
+var express = require('express');
 //得到APP监听函数
 var app= express();
 
