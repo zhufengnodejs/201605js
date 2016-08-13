@@ -1,5 +1,5 @@
 //引入express,返回值是一个函数
-var express = require('./express');
+var express = require('./lsp');
 //调用此函数还会返回一个函数
 var app = express();
 /**
