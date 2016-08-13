@@ -8,10 +8,11 @@ var app= express();
  * 2. 上一个中间件的处理结果可以传递给下一个中间件或路由
  * 3. 中间件可以通过是否调用next函数来决定是否将此请求继续向下传递
  * 4. 路由和中间件是放在一个数组中的
+ * 5. 中间件的路径是以它开头就可以，路由呢要完全匹配路径
  *
  * 中间件的用途
  * 1. 公用的处理，或添加公共的方法
- *
+ * 2. 实现流程控制，可以决定是请求是否可以继续
  *
  */
 //如果不传路径，表示对所有的路径执行此中间件函数
@@ -32,11 +33,12 @@ app.use(function(req,res,next){
 });
 //使用中间件  请求 响应 next函数
 //部门经理
+//use路径只要是传进来的url以此路径开头就可以
 app.use('/money',function(req,res,next){
     req.money = 10000;
     console.log('部门经理',req.money);
-    res.end('昨天晚上明明是8点59走的，不报销');
-    //next();
+    //res.end('昨天晚上明明是8点59走的，不报销');
+    next();
 });
 //总监
 app.use('/money',function(req,res,next){
@@ -52,6 +54,7 @@ app.use('/money',function(req,res,next){
     next();
 });
 //到自己手里了
+//路由中的路径是绝对匹配的
 app.get('/money',function(req,res){
     console.log('自己',req.money);
     res.end('自己'+req.money);
