@@ -35,11 +35,17 @@ app.get('/user',function(req,res){
 /**
  * 真正渲染模板的对象并不是第二个参数
  * 而是 res.locals
+ * :xxx 叫路径参数 匹配的是一个字符串
+ * /home/zfpx/1
+ *
+/**
+ * 1. 转成正则
+ * 2. 记录原始的变量名
+ * 3. 当请求到来的时候给params赋值
  */
-app.get('/home',function(req,res){
-    console.log(res.locals);
-    res.render('home.ejs',{username:'张三',age:100});
-
+app.get('/home/:name/:id',function(req,res){
+    console.log(req.params);
+    res.render('home.ejs',{username:'<h1>张三</h1>',age:100});
 });
 
 app.listen(9090);
