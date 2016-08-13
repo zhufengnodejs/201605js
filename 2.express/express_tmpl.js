@@ -1,6 +1,6 @@
 var path = require('path');
 var url = require('url');
-
+var fs = require('fs');
 //导出一个函数 express
 module.exports = function(){
    //当调用此函数的时候返回一个函数，就是监听函数，有两个参数,分别是请求和响应
@@ -12,18 +12,40 @@ module.exports = function(){
      //取得路径名
      var pathname = urlObj.pathname;
      var index = 0;
+       //定义在中间件里之后，后面所有的路由里都可以使用res.render方法
+     res.render = function(tmpl,data){
+           var viewEngine = app.getKey('view engine');//获得模板引擎
+           if(viewEngine == 'ejs'){//如果是ejs
+               //如果原来的模板路径有后缀.ejs,则追加一个空串，否则，加.ejs后缀
+               tmpl = tmpl+(tmpl.endsWith('.ejs')?'':'.ejs');
+               //等于模板的存放目录绝地路径加上模板文件相对路径
+               var filename = path.join(app.getKey('views'),tmpl);
+               fs.readFile(filename,'utf8',function(err,content){
+                   // <%=username%> -> 张三   <%=age%> -> 100
+                   content = content.replace(/<%=(\w+)%>/g,function(){
+                       var matched = arguments[0];//匹配到的字符子串
+                       var attr = arguments[1];//第一个分组,其实就是变量名
+                       return data[attr];//返回数据对象属性对应的值
+                   });
+                   res.end(content);
+               });
+           }else{
+               res.end('不支持的模板引擎')
+           }
+       }
      //next表示调用下一个层
      function next(){
-         if(index >=app.layers.length){
+         var layer = app.layers[index++];
+         if(!layer){
              return res.end('CANNOT '+req.method+' '+pathname);
          }
          //取出当前层然后让索引累加
-        var layer = app.layers[index++];
+
          //如果此层的类型是中间件的话 {type,path,listener}
         if(layer.type=='middleware'){
             //如果请求的路径名是以当前path开头的话，则匹配
             // /user/add /user/
-            if(pathname == layer.path || pathname.indexOf(layer.path+'/') == 0){
+            if(pathname == layer.path || '/' == layer.path || pathname.indexOf(layer.path+'/') == 0){
                 layer.listener(req,res,next);//中间有三个参数
             }else{
                 next();
@@ -45,10 +67,13 @@ module.exports = function(){
    var methods = ['all','get','post','delete','head','put'];
    methods.forEach(function(method){
         app[method] = function(path,listener){
+            console.log('get',app.layers);
             //向数组中增加新的元素，是一个配置对象，由路径和监听函数组成
             app.layers.push({type:'route',method:method,path:path,listener:listener});
+
         }
     })
+
     //注册中间件,注册的时候可以省略path
     app.use = function(path,listener){
         if(typeof path == 'function'){//意味着没有传路径 ，只传了函数
@@ -56,6 +81,7 @@ module.exports = function(){
             // 中间件匹配路径的时候和路由不一样，只要前缀相同就可以匹配上
             path = '/';//给path赋一个默认值
         }
+
         //因为中间件不考虑方法名
         app.layers.push({type:'middleware',path:path,listener:listener});
     }
@@ -63,12 +89,14 @@ module.exports = function(){
     app.set = function(key,value){//把一个key和value设置到app内部settings
         app.settings[key] = value;
     }
-    app.get = function(key){//从app.settings中获取一个key
+    app.getKey = function(key){//从app.settings中获取一个key
         return app.settings[key];
     }
     //启动一个服务器，并且把自己作为监听函数传进去,再在port上监听客户端的请求
     app.listen = function (port) {
         require('http').createServer(app).listen(port);
     };
+
    return app;
 }
+
