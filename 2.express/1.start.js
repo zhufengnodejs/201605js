@@ -6,9 +6,7 @@ var app = express();
 app.get('/',function(req,res){
     res.end('homepage');
 });
-app.post('/',function(req,res){
-    res.end('post homepage');
-});
+
 //配置 get请求 /a路径名的时候执行的回调函数
 app.get('/a',function(req,res){
     res.end('a');

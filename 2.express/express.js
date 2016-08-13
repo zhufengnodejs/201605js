@@ -7,13 +7,17 @@ module.exports = function(){
    var app =  function(req,res){
      //把url转换成对象
      var urlObj =  url.parse(req.url);
+     //获取请求中的方法名 方法名要从大写转成小写
+     var method = req.method.toLowerCase();
      //取得路径名
      var pathname = urlObj.pathname;
        //循环保存在数组的每个路由配置对象
      for(var i=0;i<app.routes.length;i++){
+         //取出当前的路由
         var route = app.routes[i];
-        if(route.path == pathname){
-            route.listener(req,res);
+         //如果方法名相同并且路径相当的话，就可以执行对应的回调函数了
+        if(method == route.method && route.path == pathname){
+            return route.listener(req,res);
         }
      }
    }
