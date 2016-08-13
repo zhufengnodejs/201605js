@@ -1,6 +1,10 @@
-var express = require('express');
+var express = require('./express_middleware');
 //得到APP监听函数
 var app= express();
+/**
+ * 1. 还是一个数组，里面有路由， 也有中间件
+ *
+ */
 
 /**
  * 1. 昨天加班了，要报销昨天晚上的餐费
