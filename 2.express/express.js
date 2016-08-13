@@ -16,18 +16,28 @@ module.exports = function(){
          //取出当前的路由
         var route = app.routes[i];
          //如果方法名相同并且路径相当的话，就可以执行对应的回调函数了
-        if(method == route.method && route.path == pathname){
-            return route.listener(req,res);
+        if((route.method== 'all' || method == route.method) && (route.path == pathname|| route.path == '*')){
+            //执行对应的监听函数
+            route.listener(req,res);
+            //如果已经当前路由对象和当前请求已经成功配对，则不再继续匹配
+            break;
         }
      }
    }
     //app内部维护了一个监听数组，是一个路由数组
    app.routes = [];
     //为app增加自定义属性，第一个参数是路径，第二个参数是请求监听函数
-   app.get = function(path,listener){
-       //向数组中增加新的元素，是一个配置对象，由路径和监听函数组成
-       app.routes.push({method:'get',path:path,listener:listener});
-   }
+   var methods = ['all','get','post','delete','head','put'];
+   methods.forEach(function(method){
+        app[method] = function(path,listener){
+            //向数组中增加新的元素，是一个配置对象，由路径和监听函数组成
+            app.routes.push({method:method,path:path,listener:listener});
+        }
+    })
 
+    //启动一个服务器，并且把自己作为监听函数传进去,再在port上监听客户端的请求
+    app.listen = function (port) {
+        require('http').createServer(app).listen(port);
+    };
    return app;
 }

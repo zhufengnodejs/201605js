@@ -11,8 +11,12 @@ app.get('/',function(req,res){
 app.get('/a',function(req,res){
     res.end('a');
 });
+//*是一个通配符，表示可以匹配所有的请求路径
+app.get('*',function(req,res){
+    res.end('404');
+});
 
 //启动一个http的web服务器，监听9090端口
-//app.listen(9090);
+app.listen(9090);
 //app其实就是一个监听函数，就是当客户端连接上来的时候执行的回调函数
-require('http').createServer(app).listen(9090);
+//require('http').createServer(app).listen(9090);
