@@ -14,12 +14,16 @@ module.exports = function(){
      var index = 0;
      //next表示调用下一个层
      function next(){
+         if(index >=app.layers.length){
+             return res.end('CANNOT '+req.method+' '+pathname);
+         }
          //取出当前层然后让索引累加
         var layer = app.layers[index++];
          //如果此层的类型是中间件的话 {type,path,listener}
         if(layer.type=='middleware'){
             //如果请求的路径名是以当前path开头的话，则匹配
-            if(pathname.indexOf(layer.path) ==0){
+            // /user/add /user/
+            if(pathname == layer.path || pathname.indexOf(layer.path+'/') == 0){
                 layer.listener(req,res,next);//中间有三个参数
             }else{
                 next();
