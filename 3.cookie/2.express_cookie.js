@@ -5,14 +5,25 @@ var cookieParser = require('cookie-parser');
 app.use(cookieParser());
 //当使用express之后，res.cookie
 app.get('/write',function(req,res){
-  res.cookie('name','zfpx');
-  res.cookie('age','8');
+  //domain指定下次向哪个服务器发请求的时候要发送此cookie
+  //res.cookie('name','zfpx',{domain:'a.zfpx.cn'});
+
+  //设置下次向哪个路径的时候发送此cookie
+  //res.cookie('name','zfpx',{path:'/read'});
+
+   //设置cookie的有效期 过期时间
+  //res.cookie('name','zfpx',{expires:new Date(Date.now()+10*1000)});
+    //设置cookie的倒计时时间
+  //res.cookie('name','zfpx',{maxAge:20*1000});
+ //   res.cookie('name','zfpx');
   res.send('写入cookie');
 });
 
 app.get('/read',function(req,res){
- var cookie = req.headers.cookie;
- res.send(cookie);
+ res.send(req.cookies);
+});
+app.get('/read2',function(req,res){
+ res.send(req.cookies);
 });
 
 //统计此用户访问了多少次服务器
@@ -21,15 +32,16 @@ app.get('/visit',function(req,res){
    //当使用了cookieParser之后，会增加req.cookies的属性 {visit:1}
     var cookies = req.cookies;
     //如果cookies中有此属性，表示是老顾客，以前来过
-    var visit = cookies.visit;
-    if(visit){// 如果是老顾客，则让访问次数在原来基础上加1
-       visit = parseInt(visit)+1;
+    var xxx = cookies.xxx;
+    if(xxx){// 如果是老顾客，则让访问次数在原来基础上加1
+       xxx = parseInt(xxx)+1;
     }else{//如果没有此属性，意味着第一次，或者卡丢了 设置为1
-        visit = 1;
+        xxx = 1;
     }
     //不管是新朋友还是老朋友，都要把最新的visit值写回到客户端
-    res.cookie('visit',visit);
-    res.send('这是你的第'+visit+'次访问');
+    //设置了httpOnly=true之后浏览器就不能通过js来操作cookie
+    res.cookie('xxx',xxx,{httpOnly:true});
+    res.send('这是你的第'+xxx+'次访问');
 });
 
 app.listen(9090);
