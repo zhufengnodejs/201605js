@@ -26,7 +26,12 @@ express.static  = function(root){
 //resolve 是从当前路径出来，得到一个绝对路径
 app.use(express.static(path.resolve('public')));
 app.get('/home',function(req,res){
-    res.end('home');
+    //path must be absolute or specify root to
+    //或者在参数里指定绝对路径
+   //res.sendFile(path.resolve('home.html'));
+    //或者用相对路径，但是给定一个root参数
+   res.sendFile('./home.html',{root:path.resolve()});
+   //res.sendfile('./home.html');
 });
 
 app.listen(9090);
