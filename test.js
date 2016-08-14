@@ -1,3 +1,4 @@
+/*
 // => /book\/([^\/]+)\/([^\/]+)  ['id','name','age']
 //这是路径中指定的路径
 var str = '/book/:id/:name/3/:age';
@@ -11,4 +12,27 @@ console.log(regex);
 var url = '/book/1/zfpx/3/8';
 ///-----------------
 
+var obj = {};
+/!*url.replace(new RegExp(regex), function () {
+    console.log(arguments);
+    var ary1 = Array.prototype.slice.call(arguments, 1);
+    ary1.length = ary1.length - 2;
 
+    console.log(ary1);
+    for (var i = 0; i < ary1.length; i++) {
+        obj[paramNames[i]] = ary1[i];
+    }
+});*!/
+//用客户端传过来的url匹配正则
+var matched = url.match(new RegExp(regex));
+//循环属性数组
+for(var i=0;i<paramNames.length;i++){
+    //matched第一个值是整个字符串，所以从第二个开始才是分组
+    obj[paramNames[i]] = matched[i+1];
+}
+console.log(obj);
+
+*/
+const server = require('_http_server').STATUS_CODES;
+
+console.log(server);
