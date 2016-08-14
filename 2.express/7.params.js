@@ -1,7 +1,7 @@
-var express = require('express');
+var express = require('./express_params');
 var url = require('url');
 var app = express();
-app.use(function(req,res,next){
+/*app.use(function(req,res,next){
   // http://localhost:9090/user?name=zfpx&age=8
   var urlObj = url.parse(req.url,true);
   req.path = urlObj.pathname;//端口号和问号之间的部分
@@ -18,7 +18,13 @@ app.get('/user',function(req,res){
   //3. 获取查询对象 其实就是查询字符串对应的对象
     console.log(req.query);
     res.end('ok');
+});*/
+// /book/1000/zfpx200
+// /book/:id/:name
+// => /book\/([^\/]+)\/([^\/]+)  ['id','name']
+app.get('/book/:id/:name',function(req,res){
+    console.log(req.params);
+    res.end(req.params.id+req.params.name);
 });
-
 
 app.listen(9090);
