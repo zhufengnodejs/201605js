@@ -33,6 +33,11 @@ for(var i=0;i<paramNames.length;i++){
 console.log(obj);
 
 */
+/*
 const server = require('_http_server').STATUS_CODES;
 
-console.log(server);
+console.log(server);*/
+//就是把cookie从字符串转成对象
+var cookieParser = require('cookie-parser');
+// name=zfpx  => {name:'zfpx'}
+
