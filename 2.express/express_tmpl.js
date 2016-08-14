@@ -13,19 +13,24 @@ module.exports = function(){
      var pathname = urlObj.pathname;
      var index = 0;
        //定义在中间件里之后，后面所有的路由里都可以使用res.render方法
-     res.render1 = function(tmpl,data,callback){
+     res.render = function(tmpl,data,callback){
            var viewEngine = app.getKey('view engine');//获得模板引擎
            if(viewEngine == 'ejs'){//如果是ejs
                //如果原来的模板路径有后缀.ejs,则追加一个空串，否则，加.ejs后缀
                tmpl = tmpl+(tmpl.endsWith('.ejs')?'':'.ejs');
                //等于模板的存放目录绝地路径加上模板文件相对路径
                var filename = path.join(app.getKey('views'),tmpl);
+               var _locals = {};
+               for(var attr in data)
+                   _locals[attr] = data[attr];
+               for(var attr in res.locals)
+                   _locals[attr] = res.locals[attr];
                fs.readFile(filename,'utf8',function(err,content){
                    // <%=username%> -> 张三   <%=age%> -> 100
                    content = content.replace(/<%=(\w+)%>/g,function(){
                        var matched = arguments[0];//匹配到的字符子串
                        var attr = arguments[1];//第一个分组,其实就是变量名
-                       return data[attr];//返回数据对象属性对应的值
+                       return _locals[attr];//返回数据对象属性对应的值
                    });
                    //如果传入了回调函数，那么把结果传递给回调函数
                    if(callback){
