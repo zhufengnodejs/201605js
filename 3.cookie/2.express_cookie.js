@@ -1,8 +1,13 @@
 var express = require('express');
+var querystring = require('querystring');
 var app = express();
 var cookieParser = require('cookie-parser');
 //使用此中间件之后才有req.cookies属性
-app.use(cookieParser());
+app.use(function(req,res,next){
+  //var cookie = req.header.cookie;// name=zfpx; age=8
+  req.cookies =  querystring.parse(req.header.cookie,'; ');
+  next();
+});
 //当使用express之后，res.cookie
 app.get('/write',function(req,res){
   //domain指定下次向哪个服务器发请求的时候要发送此cookie

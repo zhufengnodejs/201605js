@@ -38,6 +38,10 @@ const server = require('_http_server').STATUS_CODES;
 
 console.log(server);*/
 //就是把cookie从字符串转成对象
-var cookieParser = require('cookie-parser');
+//var cookieParser = require('cookie-parser');
 // name=zfpx  => {name:'zfpx'}
 
+var querystring = require('querystring');
+console.log(querystring.parse('name=zfpx&age=8'));
+//如果不同字段之间的分隔符不是&符的话，需要手工指定分隔符
+console.log(querystring.parse('name@zfpx; age@8','; ','@'));
