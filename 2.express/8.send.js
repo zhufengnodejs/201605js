@@ -8,7 +8,7 @@ app.use(function(req,res,next){
          res.end(msg);//结束响应
      }else if(typeof msg == 'object'){
          res.setHeader('Content-Type','application/json;charset=utf-8');
-         res.end(JSON.string(msg));
+         res.end(JSON.stringify(msg));
      }else if(typeof msg == 'number'){
          res.statusCode = msg;
          res.end(STATUS_CODES[msg]);
