@@ -9,7 +9,11 @@ app.set('views',path.resolve('views'));
 //对于html类型的模板，使用ejs的渲染方法
 app.engine('html',require('ejs').__express);
 //使用bodyparser中间件，会把请求体转成对象放在 req.body上
-app.use(bodyParser.urlencoded());
+app.use(function(req,res,next){
+   //把请求体转成req.body
+   //要根据请求体的类型调用不同的转换方法 key=value , {key:value}
+});
+//app.use(bodyParser.urlencoded());
 app.use(function(req,res,next){
    //重定向
    res.redirect = function(url){
@@ -28,6 +32,7 @@ app.get('/login',function(req,res){
    res.render('login');
 });
 app.post('/login',function(req,res){
+   //从请求体中取得请求对象
    var user = req.body;
    //如果用户名和密码都正确
    if(user.username =='admin' && user.password == 'admin'){
