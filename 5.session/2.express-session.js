@@ -2,6 +2,7 @@ var express = require('express');
 var path = require('path');
 //express的session中间件
 var session = require('express-session');
+var MongoStore = require('connect-mongo')(session);
 var bodyParser = require('body-parser');
 var app = express();
 //设置模板的存放目录
@@ -13,7 +14,13 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(session({
     secret:'zfpx',//提供cookie加密的
     resave:true,//每次请求都重新保存session
-    saveUninitialized:true//保存未初始化的session
+    cookie:{maxAge:1000},
+    saveUninitialized:true,//保存未初始化的session
+    //指定session的存储位置
+    store:new MongoStore({
+        //指定mongodb数据库地址
+        url:'mongodb://localhost/sessiontestll'
+    })
 }));
 //显示空白的登陆表单
 app.get('/login',function(req,res){
