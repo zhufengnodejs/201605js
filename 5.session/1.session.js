@@ -21,6 +21,7 @@ app.get('/',function(req,res){
     if(sessionId){
         //在sessions对象中查取此ID对应的数据对象 {balance:100}
         var sessions = getSessions();
+        //sessionObj就是此客户端在服务器端保存的数据对象
         var sessionObj = sessions[sessionId];
         if(sessionObj){
             sessionObj.balance -= 10;
