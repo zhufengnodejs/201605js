@@ -1,7 +1,6 @@
 var express = require('express');
 var cookieParser = require('cookie-parser')
 var uuid = require('uuid');
-console.log(uuid.v4());
 var app = express();
 //当使用此中间件之后会在 req.cookies (读取请求头中的cookie字段，并转成对象)
 app.use(cookieParser());
@@ -24,8 +23,14 @@ app.get('/',function(req,res){
         if(sessionObj){
             sessionObj.balance -= 10;
             res.send('欢迎你再次光临，你的卡上余额为'+sessionObj.balance+'元');
+        }else{//如果客户端带着卡号过来了，但是找不到对应
+            genid();
         }
     }else{
+        genid();
+    }
+
+    function genid(){
         //生成一个永远不会重复的字符串来做为此客户端的会话唯一标识
         var sessionId = uuid.v4();
         //在服务器开辟的内存空间里记录此卡号对应的对象信息
