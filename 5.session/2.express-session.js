@@ -19,7 +19,7 @@ app.use(session({
     //指定session的存储位置
     store:new MongoStore({
         //指定mongodb数据库地址
-        url:'mongodb://localhost/sessiontestll'
+        url:'mongodb://123.57.143.189/sessiontestll'
     })
 }));
 //显示空白的登陆表单
