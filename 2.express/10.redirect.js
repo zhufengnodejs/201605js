@@ -15,7 +15,7 @@ app.engine('html',require('ejs').__express);
    //把请求体转成req.body
    //要根据请求体的类型调用不同的转换方法 key=value , {key:value}
 });*/
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({extended:true}));
 /*app.use(function(req,res,next){
    //重定向
    res.redirect = function(url){
