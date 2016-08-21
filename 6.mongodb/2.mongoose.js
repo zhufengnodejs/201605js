@@ -96,6 +96,7 @@ personModel.find({home:{$exists:false}},function(err,docs){
 var pageSize = 2;
 var pageNum = 3;
 
+/*
 personModel.find()// 按年龄降序排列
     .sort({age:1})
     .skip((pageNum -1)*pageSize)//指定跳过的记录数
@@ -105,3 +106,4 @@ personModel.find()// 按年龄降序排列
         console.log(docs);
     });
 
+*/
