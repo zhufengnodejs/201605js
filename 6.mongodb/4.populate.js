@@ -23,8 +23,16 @@ courseModel.create({
         name: '张三',
         course: course._id
     }, function (err, student) {
-        studentModel.findById(student._id,function(err,doc){
+        /*studentModel.findById(student._id,function(err,doc){
+            courseModel.findById(doc.course,function(err,c){
+                doc.course = c;
+                console.log(doc);
+            })
+
+        })*/
+        //populate 方法负责把ID转成对象
+        studentModel.findById(student._id).populate('course').exec(function(err,doc){
             console.log(doc);
-        })
+        });
     })
 })
