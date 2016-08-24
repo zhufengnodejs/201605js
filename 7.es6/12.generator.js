@@ -20,11 +20,7 @@ function* read() {
 //每调用一次next，函数体会往下执行一次，执行到下一个yield或函数结束为止
 //每一次的yield后面的值就是返回值中的value
 var iterator = read();
-var res1 = iterator.next();// {value:'node',done:false}
-console.log(res1);
-var res1 = iterator.next(2);// {value:'node',done:false}
-console.log(res1);
-var res1 = iterator.next(3);// {value:'node',done:false}
-console.log(res1);
-var res1 = iterator.next();// {value:'node',done:false}
-console.log(res1);
+do{
+   var result = iterator.next();
+    console.log(result);
+}while(!result.done)
