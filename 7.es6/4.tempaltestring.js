@@ -37,3 +37,9 @@ console.log(strings);
 */
 
 
+
+var tmpl = '${name} is ${age} years old!';
+function translate(tmpl){
+    //返回替换后的内容
+    //return "zfpx is 8 years old!";
+}
