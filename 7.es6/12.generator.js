@@ -9,10 +9,11 @@
  */
 function* read() {
     console.log(1);
-    yield 'node';//产出
-    console.log(2);
-    yield 'js';
-    console.log(3);
+    //当调用next的时候可以传参，传给本次要执行的语句的初始值
+    var one = yield 'node';//产出
+    console.log(one);
+    var two = yield 'js';
+    console.log(two);
     yield 'java';
 }
 //iterator就是迭代器
@@ -21,9 +22,9 @@ function* read() {
 var iterator = read();
 var res1 = iterator.next();// {value:'node',done:false}
 console.log(res1);
-var res1 = iterator.next();// {value:'node',done:false}
+var res1 = iterator.next(2);// {value:'node',done:false}
 console.log(res1);
-var res1 = iterator.next();// {value:'node',done:false}
+var res1 = iterator.next(3);// {value:'node',done:false}
 console.log(res1);
 var res1 = iterator.next();// {value:'node',done:false}
 console.log(res1);
