@@ -42,4 +42,10 @@ var tmpl = '${name} is ${age} years old!';
 function translate(tmpl){
     //返回替换后的内容
     //return "zfpx is 8 years old!";
+    var reg = /\$\{(\w+)\}/g;
+    tmpl = tmpl.replace(reg, function () {
+        return eval(arguments[1]);
+    });
+    return tmpl;
 }
+console.log(translate(tmpl));
