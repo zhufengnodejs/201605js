@@ -18,7 +18,12 @@ function* read(){
 
 function co(fn){
     var it = read();///返回一个迭代器
-
-
+    n();
+    function n(val){
+        var result = it.next(val);
+        if(!result.done){
+            result.value(n);
+        }
+    }
 }
 co(read);
