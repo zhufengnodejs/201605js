@@ -18,11 +18,11 @@ function* read(){
 
 function co(fn){
     var it = read();///返回一个迭代器
-    n();
-    function n(val){
-        var result = it.next(val);
-        if(!result.done){
-            result.value(n);
+    n();//调用此函数
+    function n(val){//声明一个函数
+        var result = it.next(val);//得到返回值
+        if(!result.done){//表示是否已经迭代完成
+            result.value(n);//表示调用此yield函数
         }
     }
 }
