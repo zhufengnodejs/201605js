@@ -33,7 +33,7 @@ var arr = [1,2,3];
         return 1;
    return num * c(--num);
 }*/
-var fs = require('fs');
+/*var fs = require('fs');
 //匿名函数的递归用到了函数名
 fs.readFile('./num.txt','utf8',function c(err,data){
     var num = parseInt(data);
@@ -42,6 +42,31 @@ fs.readFile('./num.txt','utf8',function c(err,data){
     var result = num * c(err,--num);;
     console.log(result);
     return result;
-})
+})*/
 /*// 阶乘 5
 console.log(calc(5));*/
+
+var input = [1,4,3,2];
+/*output = input.map(item => item*2);
+//var output = [2,4,6];
+console.log(output);*/
+//参数多于一个，需要用小括号包裹
+//input.sort((a,b)=>a - b);
+//如果函数体不只是有返回值，还有别的语句，需要用大括号包裹
+input.sort((a,b)=>{
+    console.log('compare a and b');
+    return a-b;
+});
+console.log(input);
+
+
+var person = {
+    name:'zfpx',
+    print:function(){
+        //箭头函数没有自己的this指针，使用复用外层的this指针
+        setTimeout(()=>{
+            console.log(this.name);
+        },500);
+    }
+}
+person.print();
