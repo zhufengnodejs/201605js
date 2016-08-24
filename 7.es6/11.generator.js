@@ -15,12 +15,9 @@ function read(books) {
         }
     }
 }
+//it就是迭代器
 var it = read(['node', 'js', 'java']);
-var first = it.next();
-console.log(first);
-var first = it.next();
-console.log(first);
-var first = it.next();
-console.log(first);
-var first = it.next();
-console.log(first);
+do{
+    var current = it.next();
+    console.log(current);
+}while(!current.done)
