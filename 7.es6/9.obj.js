@@ -46,6 +46,7 @@ Object.assign = function (target, ...sources) {
         copy(target, source);
     });
 }
+/*
 var obj = {};
 var source = {hobbies: ['smoking', 'drinking']}
 Object.assign(obj, source);
@@ -54,4 +55,36 @@ console.log(source);
 obj.hobbies.push('hair');
 console.log('======================');
 console.log(obj);
-console.log(source);
+console.log(source);*/
+
+var obj1 = {name:'zfpx1'};
+var obj2 = {name:'zfpx2'};
+var obj = {};// __proto__ Object.prototype
+/*Object.setPrototypeOf(obj,obj1);
+console.log(obj.name);
+Object.setPrototypeOf(obj,obj2);
+console.log(obj.name);
+console.log(Object.getPrototypeOf(obj));*/
+
+/*var obj3 = {
+    //直接在对象字面量中设置原型 __ptoto__
+    __proto__:obj1
+}
+console.log(obj3.name);
+console.log(Object.getPrototypeOf(obj3));*/
+
+let p = {
+    eat(){
+        return 'milk';
+    }
+}
+console.log(p.eat());
+let stu = {
+    __proto__:p,
+    eat(){
+        //可以在方法中使用super来引用__proto__
+        return super.eat()+'+bread';
+    }
+}
+console.log(stu.eat());
+
