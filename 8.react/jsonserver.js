@@ -8,6 +8,7 @@ app.get('/jsonp',function(req,res){
     var result = {q:wd,p:false,s:[]};//拼结果对象
     for(var i=0;i<10;i++)
         result.s.push(wd+i);
+    res.setHeader('Access-Control-Allow-Origin',"*");
     res.send(`${cb}(${JSON.stringify(result)})`);
 });
 app.listen(9090);

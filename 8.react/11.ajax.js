@@ -1,3 +1,27 @@
+function ajax({url,type,data,processData,jsonp,dataType,context,success}){
+   var xhr = new XMLHttpRequest();
+    //http://localhost:9090/jsonp?cb=jQuery111306121306642889977_1472113245260&wd=a&_=1472113245261
+   url+= '?';//http://localhost:9090/jsonp?
+   var params = '';
+   for(var attr in data){
+       params += (attr+'='+data[attr]);// wd=a
+   }
+   url+=params;// http://localhost:9090/jsonp?wd=a
+   var method = 'jQuery_'+Date.now();
+   url += ('&'+jsonp+'='+method);
+    //http://localhost:9090/jsonp?wd=a&cb=jQuery_1472113245260
+   xhr.open(type,url,true);
+   xhr.onreadystatechange = function(){
+       if(xhr.readyState == 4 && /2\d{2}/.test(xhr.status)){
+            console.log(xhr.responseText);
+           //jQuery_1472113904747({"q":"a","p":false,"s":["a0","a1","a2","a3","a4","a5","a6","a7","a8","a9"]})
+           var response = xhr.responseText.slice(xhr.responseText.indexOf('(')+1,xhr.responseText.length-1);
+           var jsonObj = JSON.parse(response);
+           success.bind(context)(jsonObj);
+       }
+   }
+   xhr.send();//因为发的是get请求，不再需要请求体了
+}
 var Suggestion = React.createClass({
     //设置初始状态
     getInitialState(){
@@ -7,7 +31,7 @@ var Suggestion = React.createClass({
     handleChange(event){
         //1. 获取文本框的内容，2.并且调用百度的接口，获取结果，并显示在列表组上
         var keyword = event.target.value;
-        $.ajax({
+        ajax({
             //url:'https://www.baidu.com/su',//请求的URL地址
             url:'http://localhost:9090/jsonp',//请求的URL地址
             type:'GET',//请求的方法
