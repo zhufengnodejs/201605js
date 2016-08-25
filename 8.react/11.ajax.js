@@ -39,7 +39,7 @@ var Suggestion = React.createClass({
             url:'http://localhost:9090/jsonp',//请求的URL地址
             type:'GET',//请求的方法
             data:{wd:keyword},//要传递的参数对象
-            processData:true,//为true表示会把参数对象序列化成查询字符中追加到url后面
+            processData:false,//为true表示会把参数对象序列化成查询字符中追加到url后面
             jsonp:'cb',//指定服务器中获取调用方法的参数名
             dataType: 'jsonp',//指定数据类型是jsonp,会把外层的方法调用去掉，把里面的JSON字符串转成对象传给success方法
             context:this,//指定回调函数中的this指针
