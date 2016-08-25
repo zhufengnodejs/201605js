@@ -1,4 +1,4 @@
-var xxxx = {
+var mymix = {
     getInitialState(){//获取默认状态
         return {count: 0};
     },
@@ -8,7 +8,7 @@ var xxxx = {
 }
 var Counter1 = React.createClass({
     //混合可以实现逻辑的复用
-    mixins:[xxxx],
+    mixins:[mymix],
     render(){
         return (
             <div>
@@ -19,7 +19,7 @@ var Counter1 = React.createClass({
     }
 });
 var Counter2 = React.createClass({
-    mixins:[xxxx],
+    mixins:[mymix],
     render(){
         return (
             <div>
