@@ -3,9 +3,12 @@ function ajax({url,type,data,processData,jsonp,dataType,context,success}){
     //http://localhost:9090/jsonp?cb=jQuery111306121306642889977_1472113245260&wd=a&_=1472113245261
    url+= '?';//http://localhost:9090/jsonp?
    var params = '';
-   for(var attr in data){
-       params += (attr+'='+data[attr]);// wd=a
-   }
+   if(processData)
+       for(var attr in data){
+           params += (attr+'='+data[attr]);// wd=a
+       }
+    else
+       url+=data;
    url+=params;// http://localhost:9090/jsonp?wd=a
    var method = 'jQuery_'+Date.now();
    url += ('&'+jsonp+'='+method);
