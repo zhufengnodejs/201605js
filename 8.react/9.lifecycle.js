@@ -18,9 +18,10 @@ var Counter = React.createClass({
     handleClick(){
         this.setState({count:this.state.count+1});
     },
-    shouldComponentUpdate(){
+    //当此组件收到新的状态和属性之后会执行此方法 新的属性对象 新的状态对象
+    shouldComponentUpdate(nextProp, nextState){
         console.log('6. 询问此组件是否需要更新 shouldComponentUpdate');
-        if(this.state.count>=10){//如果 count>=10,不要再更新了
+        if(nextState.count>=10){//如果 count>=10,不要再更新了
             return false;
         }else{
             return true;
@@ -45,12 +46,35 @@ var Counter = React.createClass({
             <div>
                 {this.props.name}:{this.state.count}
                 <button onClick={this.handleClick}>加1</button>
-                <button onClick={this.remove}>移除</button>
+                <button onClick={this.remove}>移除</button><br/>
+                <SubCounter count={this.state.count}/>
             </div>
         )
     },
     componentDidMount(){
         console.log('5. 此组件渲染到界面之后 componentDidMount');
+    }
+});
+//子组件
+var SubCounter = React.createClass({
+    componentWillReceiveProps(){
+        console.log('10 . 子组件将要得到新的属性 componentWillReceiveProps');
+    },
+    //组件收到新的属性和状态之后都要判断是否需要更新
+    shouldComponentUpdate(nextProp, nextState){
+        console.log('11. 子组件是否需要更新 shouldComponentUpdate');
+        if(nextProp.count>=5){//如果 count>=10,不要再更新了
+            return false;
+        }else{
+            return true;
+        }
+    },
+    render(){
+        return (
+            <div>
+                子组件:{this.props.count}
+            </div>
+        )
     }
 });
 
