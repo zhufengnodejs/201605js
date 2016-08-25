@@ -2,9 +2,9 @@ var Panel = React.createClass({
     render(){
         return (
             <div className="panel panel-primary">
-                <PanelHead heading={this.props.heading}></PanelHead>
-                <PanelBody body={this.props.body}></PanelBody>
-                <PanelFooter footer={this.props.footer}></PanelFooter>
+                <PanelHead content={this.props.heading}></PanelHead>
+                <PanelBody content={this.props.body}></PanelBody>
+                <PanelFooter content={this.props.footer}></PanelFooter>
             </div>
         )
     }
@@ -13,7 +13,7 @@ var PanelHead = React.createClass({
     render(){
         return (
             <div className="panel-heading">
-                {this.props.heading}
+                {this.props.content}
             </div>
         )
     }
@@ -23,7 +23,7 @@ var PanelBody = React.createClass({
     render(){
         return (
             <div className="panel-body">
-                {this.props.body}
+                {this.props.content}
             </div>
         )
     }
@@ -33,7 +33,7 @@ var PanelFooter = React.createClass({
     render(){
         return (
             <div className="panel-footer">
-                {this.props.footer}
+                {this.props.content}
             </div>
         )
     }
