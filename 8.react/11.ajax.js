@@ -8,7 +8,8 @@ var Suggestion = React.createClass({
         //1. 获取文本框的内容，2.并且调用百度的接口，获取结果，并显示在列表组上
         var keyword = event.target.value;
         $.ajax({
-            url:'https://www.baidu.com/su',//请求的URL地址
+            //url:'https://www.baidu.com/su',//请求的URL地址
+            url:'http://localhost:9090/jsonp',//请求的URL地址
             type:'GET',//请求的方法
             data:{wd:keyword},//要传递的参数对象
             processData:true,//为true表示会把参数对象序列化成查询字符中追加到url后面
