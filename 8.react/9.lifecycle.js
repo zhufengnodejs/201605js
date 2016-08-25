@@ -32,12 +32,20 @@ var Counter = React.createClass({
     componentDidUpdate(){
         console.log('8. 组件完成更新 componentDidUpdate');
     },
+    //将此组件从其父容器中移除掉
+    remove(){
+        ReactDOM.unmountComponentAtNode(document.querySelector('#app'));
+    },
+    componentWillUnmount(){
+        console.log('9. 组件将要销毁 componentWillUnmount');
+    },
     render(){
         console.log('4. 将此组件渲染到界面上 render');
         return (
             <div>
                 {this.props.name}:{this.state.count}
                 <button onClick={this.handleClick}>加1</button>
+                <button onClick={this.remove}>移除</button>
             </div>
         )
     },
