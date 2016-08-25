@@ -15,6 +15,23 @@ var Counter = React.createClass({
     componentWillMount(){
         console.log('3. 此组件将要被渲染到界面上 componentWillMount');
     },
+    handleClick(){
+        this.setState({count:this.state.count+1});
+    },
+    shouldComponentUpdate(){
+        console.log('6. 询问此组件是否需要更新 shouldComponentUpdate');
+        if(this.state.count>=10){//如果 count>=10,不要再更新了
+            return false;
+        }else{
+            return true;
+        }
+    },
+    componentWillUpdate(){
+        console.log('7. 组件将要更新 componentWillUpdate');
+    },
+    componentDidUpdate(){
+        console.log('8. 组件完成更新 componentDidUpdate');
+    },
     render(){
         console.log('4. 将此组件渲染到界面上 render');
         return (
@@ -23,6 +40,9 @@ var Counter = React.createClass({
                 <button onClick={this.handleClick}>加1</button>
             </div>
         )
+    },
+    componentDidMount(){
+        console.log('5. 此组件渲染到界面之后 componentDidMount');
     }
 });
 
