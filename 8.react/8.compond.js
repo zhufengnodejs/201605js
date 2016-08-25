@@ -2,9 +2,9 @@ var Panel = React.createClass({
     render(){
         return (
             <div className="panel panel-primary">
-                <PanelHead></PanelHead>
-                <PanelBody></PanelBody>
-                <PanelFooter></PanelFooter>
+                <PanelHead heading={this.props.heading}></PanelHead>
+                <PanelBody body={this.props.body}></PanelBody>
+                <PanelFooter footer={this.props.footer}></PanelFooter>
             </div>
         )
     }
@@ -13,7 +13,7 @@ var PanelHead = React.createClass({
     render(){
         return (
             <div className="panel-heading">
-                 这是面板头部
+                {this.props.heading}
             </div>
         )
     }
@@ -23,7 +23,7 @@ var PanelBody = React.createClass({
     render(){
         return (
             <div className="panel-body">
-                这是面板主体
+                {this.props.body}
             </div>
         )
     }
@@ -33,13 +33,26 @@ var PanelFooter = React.createClass({
     render(){
         return (
             <div className="panel-footer">
-                这是面板尾部
+                {this.props.footer}
             </div>
         )
     }
 });
-
+var panel1 = {
+    heading:'我是面板1的头部',
+    body:'我是面板1的身体',
+    footer:'我是面板1的尾部'
+}
 ReactDOM.render(
-    <Panel/>,
+    <Panel {...panel1}/>,
     document.querySelector('#app')
+);
+var panel2 = {
+    heading:'我是面板2的头部',
+    body:'我是面板2的身体',
+    footer:'我是面板2的尾部'
+}
+ReactDOM.render(
+    <Panel {...panel2}/>,
+    document.querySelector('#app2')
 );
