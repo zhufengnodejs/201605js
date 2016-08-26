@@ -4,6 +4,7 @@
  * 1. 读取一个文件，成功之后打印文件内容，失败了打印失败原因
  */
 var fs = require('fs');
+var Promise = require('./Promise');
 /**
  * 刚开始的时候处于初始态
  * 调用reject方法可以让状态变成失败态，然后调用失败的回调

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+    window.onload = function(){
+        function ajax(options) {
+            return new Promise(function (resolve, reject) {
+                var xhr = new XMLHttpRequest;
+                xhr.open(options.method, options.url, true);
+                xhr.onreadystatechange = function () {
+                    console.log(xhr.readyState);
+                    if (xhr.readyState == 4) {
+                        resolve(xhr.responseText);//成功调用成功的回调
+                    } else {
+                        reject(xhr.responseText);//失败调用失败的回调
+                    }
+                }
+                xhr.send();
+            });
+
+        }
+
+        var promise = ajax({
+            method: 'GET',
+            url: '/getWeixinByPhone?phone=15718856132'
+        });
+        promise.then(function (data) {
+            alert(data);
+            console.log(data);
+        },function(err){
+            console.log(err);
+        });
+    }
+
+</script>
+</html>
