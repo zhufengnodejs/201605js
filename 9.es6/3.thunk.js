@@ -32,16 +32,22 @@ function* read(){
     var content = yield readFile(file3);
     console.log(content);
 }
+//是一个让生成器自动执行完毕的函数
+co(read);
+//接收一个生成器函数
+function co(gene){
 //生成一个迭代器
-var it = read();
+    var it = gene();
 //封装了一个自己的next函数
-function callback(data){
-    //在调用下一个next的时候入上一个文件的内容，则意味着data传递给上一个yield返回值
-    var result = it.next(data);
-    if(!result.done){
-        result.value(callback);
+    function callback(data){
+        //在调用下一个next的时候入上一个文件的内容，则意味着data传递给上一个yield返回值
+        var result = it.next(data);
+        if(!result.done){
+            result.value(callback);
+        }
     }
+    callback();
 }
 
-callback();
+
 
