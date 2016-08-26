@@ -8,30 +8,37 @@
 
 </body>
 <script>
-    function ajaxPromise (queryUrl) {
-        return new Promise(function(resolve, reject)  {
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', queryUrl, true);
-            xhr.send(null);
-            xhr.onreadystatechange = function()  {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200) {
-                        resolve(xhr.responseText);
-                    } else {
-                        reject(xhr.responseText);
+    window.onload = function(){
+        function ajax(options) {
+            return new Promise(function (resolve, reject) {
+                var xhr = new XMLHttpRequest;
+                xhr.open(options.method, options.url, true);
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState== 4 && xhr.status == 200) {
+                        if(xhr.status == 200){
+                            resolve(xhr.responseText);
+                        }else{
+                            reject(xhr.responseText);
+                        }
+                       //成功调用成功的回调
                     }
                 }
-            }
+                xhr.send();
+            });
+        }
+
+        var promise = ajax({
+            method: 'GET',
+            url: '/getWeixinByPhone?phone=15718856132'
+        }).then(function (data) {
+            return ajax({
+                method: 'GET',
+                url: '/getNameByWeixin?weixin='+data
+            });
+        }).then(function(data){
+            console.log(data);
         });
     }
-
-    ajaxPromise('/getWeixinByPhone?phone=15718856132')
-            .then(function(value) {
-        alert(value);
-    })
-    .catch(function(err){
-        console.error(err);
-    });
 
 </script>
 </html>
