@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+    window.onload = function(){
+        //在客户端中通过Websocket对象来访问服务器
+        var socket = new WebSocket('ws://localhost:8080');
+        //当客户端连接成功之后会调用此回调
+        socket.onopen = function(){
+            console.log('连接已经建立');
+            socket.send('服务器你好');
+        }
+        //当客户端收到服务器发过来的消息的时候会调用回调
+        socket.onmessage = function(event){
+            //event是事件对象 data才是真正的消息主体
+            console.log('收到消息'+event.data);
+        }
+    }
+</script>
+</html>
