@@ -73,16 +73,13 @@
             move(element, target, resolve)
         });
     }
-    var ball1 = document.querySelector('.ball1');
-    var ball2 = document.querySelector('.ball2');
-    var ball3 = document.querySelector('.ball3');
-    animate(ball1, 100)
-            .then(function () {
-                return animate(ball2, 100)
-            })
-            .then(function () {
-                return animate(ball3, 100)
-            });
+    var balls = document.getElementsByClassName('ball');
+    var promise = animate(balls[0], 100);
+    for(let i=1;i<balls.length;i++){
+        promise = promise.then(function () {
+            return animate(balls[i], 100)
+        })
+    }
 </script>
 </body>
 </html>
