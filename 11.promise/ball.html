@@ -24,5 +24,34 @@
 <div class="ball ball1" style="margin-left: 0"></div>
 <div class="ball ball2" style="margin-left: 0"></div>
 <div class="ball ball3" style="margin-left: 0"></div>
+<script>
+    /**
+     * @param element 要移动的元素
+     * @param target 目标位置
+     * @param cb 移动成功之后的回调
+     */
+    function move(element,target,cb){
+      //每13毫秒向右移动一个像素
+      setTimeout(function(){
+          //先获取到当前的left值
+          var marginLeft = parseInt(element.style.marginLeft);
+          //如果当前位置小于目的地
+          if(marginLeft<target){
+              element.style.marginLeft = (marginLeft+1)+'px';
+              move(element,target,cb);
+          }else{//如果到达了目的地
+              cb&&cb();
+          }
+      },13);
+    }
+    var ball1 = document.querySelector('.ball1');
+    var ball2 = document.querySelector('.ball2');
+    var ball3 = document.querySelector('.ball3');
+    move(ball1,100,function(){
+        move(ball2,200,function(){
+            move(ball3,300)
+        });
+    });
+</script>
 </body>
 </html>
