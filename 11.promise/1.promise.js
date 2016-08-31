@@ -16,7 +16,7 @@ function readFile(filename){
         //当读到内容的时候触发data事件
         rs.on('data',function(data){
             //如果读到新的数据，则通知一下得到的新数据
-            //notify(data);
+            notify(data);
             result+=data;
         });
         //当读取完毕的时候输出结果
