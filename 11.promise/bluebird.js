@@ -18,7 +18,9 @@ module.exports = {
             });
         }
     },
-    promisifyAll(){
+    //把参数对象中所有的异步方法都对应加上一个返回promise的新方法
+    // fs.readFile    fs.readFileAsync 返回一个promise
+    promisifyAll(obj){
 
     }
 }
