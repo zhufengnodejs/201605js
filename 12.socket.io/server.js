@@ -23,11 +23,13 @@ var io = require('socket.io')(server);
 //服务器监听客户端的请求 socket是服务器与客户端通信的对象
 io.on('connection',function(socket){
     // send方法是向对方发消息
-   //socket.send('欢迎来到珠峰聊天室');
-   socket.emit('message','欢迎来到珠峰聊天室');
+   socket.send('欢迎来到珠峰聊天室');
+   //socket.emit('message','欢迎来到珠峰聊天室');
     //在服务器监听 客户端发过来的消息
    socket.on('message',function(msg){
-        console.log(msg);
+       //当收到客户端消息之后，要把此消息通知给所有人
+       //就是通过广播的形式向所有连接到服务器并且没有断开的人发消息
+       io.emit('message',msg);
    });
 });
 // http://localhost:9090/

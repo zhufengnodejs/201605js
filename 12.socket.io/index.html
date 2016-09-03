@@ -15,18 +15,18 @@
             <button class="btn btn-success">退出房间B</button>
         </div>
         <div class="panel-body">
-            <ul class="list-group">
+            <ul id="messages" class="list-group">
                 <li class="list-group-item">张三:今天天气不错<span class="pull-right"> 2016年9月3日</span></li>
                 <li class="list-group-item">李四:恩，不错<span class="pull-right"> 2016年9月3日</span></li>
             </ul>
         </div>
         <div class="panel-footer">
             <div class="row">
-                <div class="col-xs-11">
-                    <input type="text" class="form-control">
+                <div class="col-xs-10">
+                    <input onkeyup="send(event)" id="txtMsg" type="text" class="form-control">
                 </div>
-                <div class="col-xs-1">
-                    <button class="btn btn-warning">发言</button>
+                <div class="col-xs-2">
+                    <button onclick="talk()" class="btn btn-warning">发言</button>
                 </div>
             </div>
         </div>
@@ -47,7 +47,29 @@
         //监听服务器发过来的消息 收到消息后会调用回调函数
         socket.on('message',function(msg){
             console.log(msg);
+            var messages = document.querySelector('#messages');
+            var li = document.createElement('li');
+            li.className = 'list-group-item';
+            li.innerHTML = msg;
+            messages.appendChild(li);
         });
+
+        //声明一个talk的全局变量
+        window.talk = function(){
+            //得到输入框的value值
+            var txt = document.querySelector('#txtMsg');
+            var content = txt.value;
+            //把此内容通过socket发送到服务器端
+            socket.send(content);
+            txt.value = '';
+        }
+        window.send = function(event){
+            //只有当按下回车键的时候才要去发言
+            // which用来获取按下的是哪个键 keycode
+            if(event.which == 13){
+                talk();
+            }
+        }
     }
 </script>
 </html>
