@@ -5,7 +5,8 @@ module.exports = {
             //得到传给函数的参数 并转成数组
             var args = Array.from(arguments);
             return new Promise(function(resolve,reject){
-                //在此调用readFile方法
+                //在此调用readFile方法需要三个参数，文件名 编码 回调
+                //readFile=fn('1.txt','utf8',callback)
                 fn.apply(null,args.concat(function(err,data){
                     if(err){
                         //如果失败会调用失败的回调
