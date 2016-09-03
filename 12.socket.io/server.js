@@ -4,6 +4,7 @@ var path = require('path');
 var http = require('http');
 var app = express();
 app.use(express.static(__dirname));
+app.use(express.static(path.resolve('../node_modules')));
 //当客户端访问根目录的时候执行回应的回调函数
 app.get('/', function (req, res) {
     //访问哪个目录下面的文件，并发送到客户端
