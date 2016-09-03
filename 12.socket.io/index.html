@@ -13,6 +13,7 @@
             <button  onclick="leave('a')" class="btn btn-primary">退出房间A</button>
             <button onclick="join('b')" class="btn btn-success">进入房间B</button>
             <button  onclick="leave('b')" class="btn btn-success">退出房间B</button>
+            当前房间列表:<div id="currentRooms" class="alert alert-info"></div>
         </div>
         <div class="panel-body">
             <ul id="messages" class="list-group">
@@ -72,9 +73,39 @@
         window.join = function(roomName){
             //第一个参数是事件类型  第二个参数是传的参数
             socket.emit('join',roomName);
+            //先获取当前的房间列表元素
+            var currentRooms = document.querySelector('#currentRooms');
+            //获取当前房间列表
+            var rooms = currentRooms.innerHTML.trim();
+            if(rooms){
+//判断新加入的房间以前有没有
+                var index = rooms.split(',').indexOf(roomName);
+                //如果没有的话 则添加新房间
+                if(index ==-1){
+                    currentRooms.innerHTML = currentRooms.innerHTML+','+roomName;
+                }
+            }else{
+                currentRooms.innerHTML = roomName;
+            }
+
+
         }
         //离开房间
         window.leave = function(roomName){
+            socket.emit('leave',roomName);
+            //先获取当前的房间列表元素
+            var currentRooms = document.querySelector('#currentRooms');
+            //获取当前房间列表
+            var rooms = currentRooms.innerHTML.split(',');
+            console.log(rooms);
+            //判断新加入的房间以前有没有
+            var index = rooms.indexOf(roomName);
+            console.log(roomName,index);
+            //如果没有的话 则添加新房间
+            if(index > -1){
+                rooms.splice(index,1);
+                currentRooms.innerHTML = rooms.join(',');
+            }
 
         }
     }

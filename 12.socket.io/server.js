@@ -53,6 +53,15 @@ io.on('connection',function(socket){
        if(index == -1)//不在房间内则加入此房间，如果在此房间内不做处理
         currentRooms.push(roomName);
    });
+   //监听客户端离开房间的事件
+   socket.on('leave',function(roomName){
+       //先让socket离开房间
+       socket.leave(roomName);
+       //过滤掉要离开的那个房间
+       currentRooms = currentRooms.filter(function(room){
+           return room != roomName;
+       });
+   });
 });
 // http://localhost:9090/
 // app.listen(9090);
