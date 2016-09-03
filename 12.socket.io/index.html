@@ -22,7 +22,8 @@
         <div class="panel-footer">
             <div class="row">
                 <div class="col-xs-10">
-                    <input onkeyup="send(event)" id="txtMsg" type="text" class="form-control">
+                    姓名:<input type="text" id="username" class="form-control">
+                    内容:<input onkeyup="send(event)" id="txtMsg" type="text" class="form-control">
                 </div>
                 <div class="col-xs-2">
                     <button onclick="talk()" class="btn btn-warning">发言</button>
@@ -45,22 +46,24 @@
         });
         //监听服务器发过来的消息 收到消息后会调用回调函数
         socket.on('message',function(msg){
-            console.log(msg);
             var messages = document.querySelector('#messages');
             var li = document.createElement('li');
             li.className = 'list-group-item';
-            li.innerHTML = msg;
+            li.innerHTML = msg.username+':'+msg.content;
             messages.appendChild(li);
         });
 
         //声明一个talk的全局变量
         window.talk = function(){
-            //得到输入框的value值
-            var txt = document.querySelector('#txtMsg');
-            var content = txt.value;
+            //获取用户名输入框的值
+            var inputUsername = document.querySelector('#username');
+            //再获取内容输入框的值
+            var inputTxt = document.querySelector('#txtMsg');
+            var username = inputUsername.value;
+            var content = inputTxt.value;
             //把此内容通过socket发送到服务器端
-            socket.send(content);
-            txt.value = '';
+            socket.send({username:username,content:content});
+            inputTxt.value = '';
         }
         window.send = function(event){
             //只有当按下回车键的时候才要去发言
@@ -87,8 +90,6 @@
             }else{
                 currentRooms.innerHTML = roomName;
             }
-
-
         }
         //离开房间
         window.leave = function(roomName){
@@ -97,10 +98,8 @@
             var currentRooms = document.querySelector('#currentRooms');
             //获取当前房间列表
             var rooms = currentRooms.innerHTML.split(',');
-            console.log(rooms);
             //判断新加入的房间以前有没有
             var index = rooms.indexOf(roomName);
-            console.log(roomName,index);
             //如果没有的话 则添加新房间
             if(index > -1){
                 rooms.splice(index,1);
