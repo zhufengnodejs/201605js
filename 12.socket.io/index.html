@@ -3,9 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bootstrap.min.css">
 </head>
-<body>
-欢迎光临
+<body style="margin-top: 20px">
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <button class="btn btn-primary">进入房间A</button>
+            <button class="btn btn-primary">退出房间A</button>
+            <button class="btn btn-success">进入房间B</button>
+            <button class="btn btn-success">退出房间B</button>
+        </div>
+        <div class="panel-body">
+            <ul class="list-group">
+                <li class="list-group-item">张三:今天天气不错<span class="pull-right"> 2016年9月3日</span></li>
+                <li class="list-group-item">李四:恩，不错<span class="pull-right"> 2016年9月3日</span></li>
+            </ul>
+        </div>
+        <div class="panel-footer">
+            <div class="row">
+                <div class="col-xs-11">
+                    <input type="text" class="form-control">
+                </div>
+                <div class="col-xs-1">
+                    <button class="btn btn-warning">发言</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 
 <script src="/socket.io/socket.io.js"></script>

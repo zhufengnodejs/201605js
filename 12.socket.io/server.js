@@ -21,7 +21,8 @@ var io = require('socket.io')(server);
 //服务器监听客户端的请求 socket是服务器与客户端通信的对象
 io.on('connection',function(socket){
     // send方法是向对方发消息
-   socket.send('欢迎来到珠峰聊天室');
+   //socket.send('欢迎来到珠峰聊天室');
+   socket.emit('message','欢迎来到珠峰聊天室');
     //在服务器监听 客户端发过来的消息
    socket.on('message',function(msg){
         console.log(msg);
