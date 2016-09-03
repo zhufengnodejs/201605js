@@ -9,15 +9,13 @@
 <div class="container">
     <div class="panel panel-default">
         <div class="panel-heading">
-            <button class="btn btn-primary">进入房间A</button>
-            <button class="btn btn-primary">退出房间A</button>
-            <button class="btn btn-success">进入房间B</button>
-            <button class="btn btn-success">退出房间B</button>
+            <button onclick="join('a')" class="btn btn-primary">进入房间A</button>
+            <button  onclick="leave('a')" class="btn btn-primary">退出房间A</button>
+            <button onclick="join('b')" class="btn btn-success">进入房间B</button>
+            <button  onclick="leave('b')" class="btn btn-success">退出房间B</button>
         </div>
         <div class="panel-body">
             <ul id="messages" class="list-group">
-                <li class="list-group-item">张三:今天天气不错<span class="pull-right"> 2016年9月3日</span></li>
-                <li class="list-group-item">李四:恩，不错<span class="pull-right"> 2016年9月3日</span></li>
             </ul>
         </div>
         <div class="panel-footer">
@@ -69,6 +67,15 @@
             if(event.which == 13){
                 talk();
             }
+        }
+        //加入房间
+        window.join = function(roomName){
+            //第一个参数是事件类型  第二个参数是传的参数
+            socket.emit('join',roomName);
+        }
+        //离开房间
+        window.leave = function(roomName){
+
         }
     }
 </script>

@@ -22,14 +22,36 @@ var server = http.createServer(app);
 var io = require('socket.io')(server);
 //服务器监听客户端的请求 socket是服务器与客户端通信的对象
 io.on('connection',function(socket){
+    var currentRooms = [];
     // send方法是向对方发消息
-   socket.send('欢迎来到珠峰聊天室');
+   //socket.send('欢迎来到珠峰聊天室');
    //socket.emit('message','欢迎来到珠峰聊天室');
     //在服务器监听 客户端发过来的消息
    socket.on('message',function(msg){
        //当收到客户端消息之后，要把此消息通知给所有人
        //就是通过广播的形式向所有连接到服务器并且没有断开的人发消息
-       io.emit('message',msg);
+
+       //广播的时候要判断此用户是否在某个房间内
+       //如果此用户在大厅，则向所有的用户发消息，如果在某些房间内，则只向它所在的房间内发消息
+       if(currentRooms.length>0){
+           //向它所在的房间内发消息
+           for(var i=0;i<currentRooms.length;i++){
+               //向某个固定房间发消息
+                io.in(currentRooms[i]).emit('message',msg);
+           }
+       }else{//如果不在任何一个房间内，则向所有用户发消息
+           io.emit('message',msg);
+       }
+
+   });
+   //监听客户端的join事件,同一个socket可以同时加入多个房间
+   socket.on('join',function(roomName){
+       //让此socket加入到某个房间内
+       socket.join(roomName);
+       //先判断现在此用户是否在此房间内
+       var index = currentRooms.indexOf(roomName);
+       if(index == -1)//不在房间内则加入此房间，如果在此房间内不做处理
+        currentRooms.push(roomName);
    });
 });
 // http://localhost:9090/
