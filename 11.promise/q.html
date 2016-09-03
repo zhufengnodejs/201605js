@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="zfpxMod">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div ng-controller="zfpxCtrl">
+    {{name}}
+</div>
+</body>
+<script src="//cdn.bootcss.com/angular.js/1.5.7/angular.js"></script>
+<script>
+    angular.module('zfpxMod',[]);
+    //定义一个服务，返回一个字符串
+    angular.module('zfpxMod').factory('getName',function($q){
+        var name;
+        //刚开始name没有初始化,等2秒钟之后才取到值
+        //这里已经把值赋给scope了。
+        var defer = $q.defer();
+        setTimeout(function(){
+            name = 'zfpx';
+            defer.resolve(name);
+
+        },2000);
+        return defer.promise;
+    });
+    angular.module('zfpxMod').controller('zfpxCtrl',function($scope,getName){
+        getName.then(function(name){
+            $scope.name = name;
+        });
+    });
+</script>
+</html>

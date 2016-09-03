@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .ball {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+        }
+
+        .ball1 {
+            background-color: red;
+        }
+
+        .ball2 {
+            background-color: blue;
+        }
+
+        .ball3 {
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+<div class="ball ball1" style="margin-left: 0px"></div>
+<div class="ball ball2" style="margin-left: 0px"></div>
+<div class="ball ball3" style="margin-left: 0px"></div>
+<div class="ball ball3" style="margin-left: 0px"></div>
+<div class="ball ball3" style="margin-left: 0px"></div>
+<div class="ball ball3" style="margin-left: 0px"></div>
+<div class="ball ball3" style="margin-left: 0px"></div>
+<div class="ball ball3" style="margin-left: 0px"></div>
+<div class="ball ball3" style="margin-left: 0px"></div>
+<div class="ball ball3" style="margin-left: 0px"></div>
+<div class="ball ball3" style="margin-left: 0px"></div>
+<div class="ball ball3" style="margin-left: 0px"></div>
+<div class="ball ball3" style="margin-left: 0px"></div>
+<div class="ball ball3" style="margin-left: 0px"></div>
+<div class="ball ball3" style="margin-left: 0px"></div>
+<div class="ball ball3" style="margin-left: 0px"></div>
+<div class="ball ball3" style="margin-left: 0px"></div>
+<div class="ball ball3" style="margin-left: 0px"></div>
+<div class="ball ball3" style="margin-left: 0px"></div>
+<div class="ball ball3" style="margin-left: 0px"></div>
+<div class="ball ball3" style="margin-left: 0px"></div>
+<div class="ball ball3" style="margin-left: 0px"></div>
+<div class="ball ball3" style="margin-left: 0px"></div>
+<script>
+    /**
+     * @param element 要移动的元素
+     * @param target 目标位置
+     * @param cb 移动成功之后的回调
+     */
+    function move(element, target, cb) {
+        //每13毫秒向右移动一个像素
+        setTimeout(function () {
+            //先获取到当前的left值
+            var marginLeft = parseInt(element.style.marginLeft);
+            //如果当前位置小于目的地
+            if (marginLeft < target) {
+                element.style.marginLeft = (marginLeft + 1) + 'px';
+                move(element, target, cb);
+            } else {//如果到达了目的地
+                cb && cb();
+            }
+        }, 13);
+    }
+    //动画
+    function animate(element, target) {
+        return new Promise(function (resolve, reject) {
+            move(element, target, resolve)
+        });
+    }
+    var ball1 = document.querySelector('.ball1');
+    var ball2 = document.querySelector('.ball2');
+    var ball3 = document.querySelector('.ball3');
+    animate(ball1, 100)
+            .then(function () {
+                return animate(ball2, 100)
+            })
+            .then(function () {
+                return animate(ball3, 100)
+            });
+</script>
+</body>
+</html>

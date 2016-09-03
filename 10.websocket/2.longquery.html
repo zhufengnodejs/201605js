@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app"></div>
+</body>
+<script>
+    function send(){
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET','http://localhost:9090/clock',true);
+        xhr.onreadystatechange= function(){
+            if(xhr.readyState== 4 && xhr.status == 200){
+                document.querySelector('#app').innerHTML = xhr.responseText;
+                //只有当上一次的结果取回来之后，才会马上发起下一次请求
+                send();
+            }
+        }
+        xhr.send();
+    }
+    send();
+</script>
+</html>

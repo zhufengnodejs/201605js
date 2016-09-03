@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+欢迎光临
+</body>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    //当引入socket.io脚本之后，会在window下增加一个io的属性
+    window.onload = function(){
+        //连接服务器
+        var socket = io.connect('/');
+        //监听服务器的连接成功事件
+        socket.on('connect',function(){
+            console.log('成功连接服务器');
+        });
+        //监听服务器发过来的消息 收到消息后会调用回调函数
+        socket.on('message',function(msg){
+            console.log(msg);
+        });
+    }
+</script>
+</html>
