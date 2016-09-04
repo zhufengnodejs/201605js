@@ -51,9 +51,15 @@ Array.prototype.every = function(fn){
 var result = arr.some(function(item){
     return item >3;
 });
-Array.prototype.reduce = function(fn){
 
-}
+Array.prototype.reduce = function(fn,start){
+    var sum ;
+    for(var i =0;i<this.length;i++){
+        start = fn(start,this[i]);
+    }
+    return start;
+};
+
 
 //收敛 把一个数组计算成一个值
 /**
