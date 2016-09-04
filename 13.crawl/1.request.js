@@ -1,6 +1,7 @@
 var request = require('request');
 //转码工具 可以把解码gbk的内容
 var iconv = require('iconv-lite');
+//GBK包括所有的汉字，包括简体和繁体。而gb2312则只包括简体汉字。
 /**
  * ascii  127 字符
  * 中国 gb2312  255 中
