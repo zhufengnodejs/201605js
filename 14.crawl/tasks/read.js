@@ -20,7 +20,6 @@ exports.read = function(url,callback){
         if(err)
           return callback(err);
         var content = iconv.decode(body,'gbk');
-        //fs.writeFile('novel.html',content);
         var $ = cheerio.load(content);
         var items = [];
         $('.keyword .list-title').each(function(){

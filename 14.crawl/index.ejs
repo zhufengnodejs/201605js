@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>小说风云榜</title>
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <ul class="list-group">
+        <%
+         novels.forEach(function(novel){%>
+            <li class="list-group-item"><a href="<%=novel.url%>"><%=novel.name%></a></li>
+        <%});
+          %>
+    </ul>
+</div>
+</body>
+</html>
