@@ -1,6 +1,6 @@
 var child_process = require('child_process');
 // node sum.js
-var child = child_process.spawn('node',['sum.js']);
+/*var child = child_process.spawn('node',['sum.js']);
 //监听子进程的标准输出  如果子进程有输出就会触发data事件
 child.stdout.on('data',function(data){
     console.log(data.toString());
@@ -11,7 +11,13 @@ child.stdout.on('end',function(){
 });
 child.on('exit',function(){
     console.log('子进程已经退出');
-});
+});*/
+/*
 setInterval(function(){
     console.log(new Date().toLocaleString());
-},100);
+},100);*/
+
+
+var child = child_process.exec('node sum.js',function(err,stdout,stderr){
+    console.log(stdout);
+});
