@@ -14,3 +14,18 @@ app.get('/',function(req,res){
     });
 });
 app.listen(80);
+
+var CronJob = require('cron').CronJob;
+//每30分钟一次
+var job = new CronJob('1 */30 * * * *',function(){
+    process.env.DEBUG= 'crawl:*';
+    var child_process = require('child_process');
+    var child = child_process.spawn('node',['main.js']);
+    child.stdout.on('data',function(data){
+        console.log(data)
+    });
+    child.on('exit',function(){
+        console.log('任务执行完毕')
+    });
+});
+job.start();
